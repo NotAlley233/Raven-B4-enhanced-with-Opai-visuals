@@ -34,7 +34,7 @@ public final class OpaiIslandSurface implements DynamicIslandPainter.Surface {
                c.lineTo(24, 8.4f);
                c.lineTo(10.8f, 8.4f);
                c.closePath();
-            
+
                break;
 }
             case USER: {
@@ -47,7 +47,7 @@ public final class OpaiIslandSurface implements DynamicIslandPainter.Surface {
                c.lineTo(4.5f, 22);
                c.quad(3.5f, 22, 3.5f, 21);
                c.closePath();
-            
+
                break;
 }
             case LINK: {
@@ -65,10 +65,10 @@ public final class OpaiIslandSurface implements DynamicIslandPainter.Surface {
                c.lineTo(14, 16.5f);
                c.bezier(11.2f, 16.5f, 10, 15, 10, 12);
                c.lineTo(10, 10.75f);
-               
+
                strokeWidth=2.5f;
-               
-               
+
+
                c.stroke(strokeWidth,strokeColor);
                return;
             }
@@ -90,7 +90,7 @@ public final class OpaiIslandSurface implements DynamicIslandPainter.Surface {
                   c.lineTo(13, 1.5f);
                   c.quad(13, .75f, 12.5f, 1);
                   c.closePath();
-                  
+
                   c.fill(color);
                   c.restore();
                }
@@ -111,16 +111,16 @@ public final class OpaiIslandSurface implements DynamicIslandPainter.Surface {
                   c.lineTo(12 + innerRadius * (float)Math.cos(innerEnd), 12 + innerRadius * (float)Math.sin(innerEnd));
                   c.arc( 12, 12, innerRadius, innerEnd, innerStart, false);
                   c.closePath();
-                  
+
                   c.fill(color);
                }
                c.path();
                c.circle(12, 12, 4);
-            
+
                break;
 }
          }
-         
+
          c.fill(color);
       } finally {
          c.restore();
