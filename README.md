@@ -1,9 +1,19 @@
-# Raven-B4-enhanced-with-Opai-visuals
-Raven B4 enhanced with Opai visuals
+# Raven B4 enhanced with Opai visuals
 
-## Open B4
+Raven B4 enhanced with Opai visuals, featuring a redesigned ClickGUI, Dynamic Island, ArrayList, and Target HUD.
 
----
+<div align="center">
+  <img src="images/opai-settings.png" alt="Raven B4 with Opai visuals enabled in Settings, showing the ClickGUI and Dynamic Island" width="854" />
+</div>
+
+## Original projects
+
+- **Raven B4 / Open B4**: the base client. Raven B4 was originally created by **Chef**; the original Open B4 recovery credits are retained below.
+- **[Samsara](https://github.com/ZiLin466/Samsara)** by **[ZiLin466](https://github.com/ZiLin466)**: the original project used as the reference for this Opai visual adaptation, including its GUI, Dynamic Island, ArrayList, Target HUD, fonts, palettes, and animation behavior.
+
+See the [source and license notes](OpenB4/src/main/resources/assets/raven/opai/licenses/THIRD-PARTY.txt) for attribution and the pinned reference revision.
+
+## Original Open B4 interface
 
 <div align="center">
   <img src="images/gui.png" alt="Open B4 screenshot" width="920" />
@@ -38,7 +48,8 @@ user's UID: `size * 0.05506` becomes `size * 0.05` + the UID.
 - Abusez: Deobfuscating/Recovering
 - Mega: Deobfuscating/Recovering
 - Chef: Making Raven B4
+- [ZiLin466](https://github.com/ZiLin466): [Samsara](https://github.com/ZiLin466/Samsara), the reference project for the Opai visuals
 
 ## Opai visuals
 
-独立开关位于 Settings → Opai visuals；完整使用说明、NanoVG 后端及验证命令见 [OPAI.md](OPAI.md)。
+Enable **Settings → Opai visuals** to switch the complete visual style. Use **Opai color** to choose Lavender or Light Pink. See [OPAI.md](OPAI.md) for the NanoVG backend, HUD editor, build instructions, and verification commands.
