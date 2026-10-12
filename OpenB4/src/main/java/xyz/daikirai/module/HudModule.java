@@ -181,6 +181,7 @@ public class HudModule extends Module {
     }
 
     public static void render() {
+        if (xyz.daikirai.gui.opai.OpaiHud.arraylist()) return;
         List<Module> all = listed();
         long now = System.currentTimeMillis();
         ArrayList<Module> mods = new ArrayList<Module>();

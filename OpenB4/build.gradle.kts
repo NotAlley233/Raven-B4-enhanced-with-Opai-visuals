@@ -59,3 +59,35 @@ tasks.jar {
 }
 
 tasks.named<org.gradle.jvm.tasks.Jar>("remapJar") { archiveFileName.set("RavenB4.jar") }
+
+tasks.register<JavaExec>("opaiVisualCheck") {
+    group = "verification"
+    description = "Render Opai with a real hidden OpenGL context and check UI interaction and GL state restoration."
+    dependsOn(tasks.testClasses)
+    classpath = sourceSets.test.get().runtimeClasspath
+    mainClass.set("xyz.daikirai.gui.opai.OpaiVisualCheck")
+    args(layout.buildDirectory.dir("opai-verification").get().asFile.absolutePath)
+}
+
+// Test-only Forge mod on an isolated development client; never included in the release JAR.
+if (providers.gradleProperty("opaiClientCheck").isPresent) {
+    loom.runConfigs.named("client") {
+        runDir("build/opai-client-check")
+        programArgs("--width", "1280", "--height", "720")
+    }
+    // Loom 0.10's RunGameTask has an unannotated legacy `main` getter on Gradle 8.
+    // Reuse its resolved launch configuration with a standard, validated JavaExec task.
+    tasks.register<JavaExec>("opaiMinecraftCheck") {
+        dependsOn("downloadAssets", tasks.testClasses)
+        javaLauncher.set(javaToolchains.launcherFor { languageVersion.set(JavaLanguageVersion.of(8)) })
+        val client = tasks.named<JavaExec>("runClient").get()
+        mainClass.set(client.javaClass.getMethod("getMain").invoke(client) as String)
+        classpath = client.classpath + sourceSets.test.get().output
+        args = client.args
+        jvmArgs = client.jvmArgs
+        val directory = layout.buildDirectory.dir("opai-client-check").get().asFile
+        directory.mkdirs()
+        workingDir(directory)
+        systemProperty("raven.opai.clientCheck", "true")
+    }
+}

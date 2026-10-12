@@ -1,0 +1,19 @@
+Opai visuals for Raven B4
+
+Samsara visual reference: https://github.com/ZiLin466/Samsara
+Pinned revision: 23aa1b7b17528e3272874496971b71b3aca9737b
+The Opai palettes, vector icons, dynamic island layout/state/painter and spring
+motion are adapted from Samsara for Java 8. Target shell artwork and fonts are
+copied from its resources. These adapted portions are licensed under GPL-3.0;
+the full license is included. This notice does not relicense pre-existing B4 code.
+Google Sans and Source Sans 3 OFL files from the reference are included.
+Product Sans Medium is retained from the reference with its original filename;
+no separate Product Sans license was supplied by that repository.
+
+NanoVG: https://github.com/memononen/nanovg
+Revision: ce3bf745eb2d2dbc14a50bf2446783f691ac4353
+zlib license; unmodified source in native/vendor/nanovg.
+GLEW: https://github.com/Perlmint/glew-cmake
+2.2.0 revision: f456deace7b408655109aaeff71421ef2d3858c6
+Original license text included; source in native/vendor/glew.
+The local JNI bridge targets GL2 and Windows x64, without LWJGL 3 dependencies.

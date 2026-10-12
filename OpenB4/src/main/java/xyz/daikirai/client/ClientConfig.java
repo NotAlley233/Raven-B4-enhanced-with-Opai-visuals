@@ -31,6 +31,9 @@ public final class ClientConfig {
             FileWriter w = new FileWriter(file, false);
             write(w, "default_profile", defaultProfile == null ? "" : defaultProfile);
             write(w, "save_categories", GuiModule.saveCategoryPositions.isToggled());
+            write(w, "opai_visuals", xyz.daikirai.module.SettingsModule.opaiVisuals.isToggled());
+            write(w, "opai_color", (int)xyz.daikirai.module.SettingsModule.opaiColor.getInput());
+            xyz.daikirai.gui.opai.OpaiRuntime.saveLayout(w);
             for (CategoryComponent c : ClickGui.categories) {
                 write(w, "category-" + c.categoryName.name(), c.getX() + "," + c.getY());
             }
@@ -57,6 +60,12 @@ public final class ClientConfig {
                     String key = kv[0], value = kv[1];
                     if (key.equals("default_profile")) {
                         defaultProfile = value;
+                    } else if (key.equals("opai_visuals")) {
+                        xyz.daikirai.module.SettingsModule.opaiVisuals.set(value.equals("true"));
+                    } else if (key.equals("opai_color")) {
+                        xyz.daikirai.module.SettingsModule.opaiColor.setValue(Double.parseDouble(value));
+                    } else if (key.startsWith("opai_")) {
+                        xyz.daikirai.gui.opai.OpaiRuntime.loadLayout(key, value);
                     } else if (key.equals("save_categories")) {
                         GuiModule.saveCategoryPositions.setEnabled(value.equals("true"));
                         GuiModule.saveCategoryPositions.updateLabel();

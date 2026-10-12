@@ -128,6 +128,7 @@ public class Module {
         } else {
             xyz.daikirai.script.ScriptManager.onEnable(this.script);
         }
+        xyz.daikirai.gui.opai.OpaiRuntime.moduleToggled(this);
     }
 
     public void disable() {
@@ -163,6 +164,7 @@ public class Module {
         } else {
             xyz.daikirai.script.ScriptManager.onDisable(this.script);
         }
+        xyz.daikirai.gui.opai.OpaiRuntime.moduleToggled(this);
     }
 
     public void link() {

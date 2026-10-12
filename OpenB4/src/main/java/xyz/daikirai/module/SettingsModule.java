@@ -38,6 +38,8 @@ public class SettingsModule extends Module {
     public static ButtonSetting disableModulesOnLoad;
     public static SliderSetting jitterYaw, aimClosestPoint, hittableHurtTime;
     public static ButtonSetting hideFirstPersonSelfEsp;
+    public static ButtonSetting opaiVisuals;
+    public static SliderSetting opaiColor;
     public static ButtonSetting weaponAxe, weaponEnchanted, weaponFist, weaponHoe, weaponRod, weaponShovel, weaponStick;
 
     public SettingsModule(int key) {
@@ -45,6 +47,10 @@ public class SettingsModule extends Module {
     }
 
     public void link() {
+        opaiVisuals = new ButtonSetting("Opai visuals", false);
+        opaiColor = new SliderSetting("Opai color", "", "", 0, 0, 1, 1, new String[]{"Lavender", "Light Pink"}, null);
+        this.settings.add(0, opaiColor);
+        this.settings.add(0, opaiVisuals);
         customCape = (SliderSetting) ModuleManager.setting(this, "Custom cape");
         disableModulesOnLoad = (ButtonSetting) ModuleManager.setting(this, "Disable modules on load");
         disableModulesOnLoad.notSaved();
@@ -78,7 +84,9 @@ public class SettingsModule extends Module {
 
     @Override
     public void guiButtonToggled(ButtonSetting b) {
-        if (b == editPosition) {
+        if (b == opaiVisuals) {
+            xyz.daikirai.gui.opai.OpaiRuntime.styleChanged();
+        } else if (b == editPosition) {
             mc.displayGuiScreen(new InfoHudEditor());
         }
     }

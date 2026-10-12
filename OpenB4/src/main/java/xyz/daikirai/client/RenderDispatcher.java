@@ -123,6 +123,7 @@ public final class RenderDispatcher {
                 }
             }
             InfoHud.render(visible);
+            xyz.daikirai.gui.opai.OpaiRuntime.renderIsland();
         }
     }
 

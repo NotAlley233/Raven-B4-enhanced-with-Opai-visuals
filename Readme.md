@@ -14,6 +14,7 @@
 ## Building
 
 ```powershell
+cd OpenB4
 .\gradlew.bat build
 ```
 
@@ -34,3 +35,7 @@ user's UID: `size * 0.05506` becomes `size * 0.05` + the UID.
 - Abusez: Deobfuscating/Recovering
 - Mega: Deobfuscating/Recovering
 - Chef: Making Raven B4
+
+## Opai visuals
+
+独立开关位于 Settings → Opai visuals；完整使用说明、NanoVG 后端及验证命令见 [OPAI.md](OPAI.md)。
