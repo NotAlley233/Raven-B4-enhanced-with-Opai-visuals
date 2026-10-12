@@ -37,6 +37,8 @@ public class ClickGui extends GuiScreen {
     public ScaledResolution sr;
     public GuiButtonExt commandSend;
     public GuiTextField commandLineInput;
+    private final xyz.daikirai.gui.opai.OpaiScreen opai = new xyz.daikirai.gui.opai.OpaiScreen();
+    private boolean opaiActive;
 
     public ClickGui() {
         categories = new ArrayList<CategoryComponent>();
@@ -66,6 +68,12 @@ public class ClickGui extends GuiScreen {
                 ClickGui.this.timer = null;
             }
         }, 650L);
+        if (xyz.daikirai.gui.opai.OpaiRuntime.enabled()) {
+            this.opai.open(this.width, this.height);
+            this.opaiActive = true;
+        } else {
+            this.opaiActive = false;
+        }
     }
 
     @Override
@@ -79,6 +87,14 @@ public class ClickGui extends GuiScreen {
 
     @Override
     public void drawScreen(int x, int y, float p) {
+        if (!CommandLineModule.open && xyz.daikirai.gui.opai.OpaiRuntime.enabled() && xyz.daikirai.gui.opai.OpaiRuntime.ready()) {
+            if (!this.opaiActive) { this.opai.open(this.width, this.height); this.opaiActive = true; }
+            Module hud = ModuleManager.get("HUD");
+            if (hud != null && hud.isEnabled()) xyz.daikirai.module.HudModule.render();
+            this.opai.paint(this.width, this.height, x, y);
+            return;
+        }
+        this.opaiActive = false;
         int bg;
         Module hud = ModuleManager.get("HUD");
         if (hud != null && hud.isEnabled()) {
@@ -287,6 +303,7 @@ public class ClickGui extends GuiScreen {
 
     @Override
     public void mouseClicked(int x, int y, int m) throws IOException {
+        if (this.opaiActive) { this.opai.click(x, y, m); return; }
         for (CategoryComponent c : categories) {
             if (m == 0) {
                 if (c.overCategoryIcon(x, y)) {
@@ -317,6 +334,7 @@ public class ClickGui extends GuiScreen {
 
     @Override
     public void mouseReleased(int x, int y, int s) {
+        if (this.opaiActive) { this.opai.release(); return; }
         if (s == 0) {
             for (CategoryComponent c : categories) {
                 c.overTitle(false);
@@ -332,6 +350,7 @@ public class ClickGui extends GuiScreen {
 
     @Override
     public void keyTyped(char t, int k) {
+        if (this.opaiActive) { this.opai.key(t, k); return; }
         if (k == ModuleManager.gui.getKeycode() && !ModuleManager.commandLine.isEnabled() || k == 1 && !BindComponent.binding) {
             this.mc.displayGuiScreen(null);
             return;
@@ -366,6 +385,12 @@ public class ClickGui extends GuiScreen {
         super.handleMouseInput();
         int dWheel = Mouse.getEventDWheel();
         if (dWheel != 0) {
+            if (this.opaiActive) {
+                int mx = Mouse.getEventX() * this.width / this.mc.displayWidth;
+                int my = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+                this.opai.wheel(mx, my, Integer.signum(dWheel), org.lwjgl.input.Keyboard.isKeyDown(42) || org.lwjgl.input.Keyboard.isKeyDown(54));
+                return;
+            }
             dWheel = dWheel >> 31 | -dWheel >>> 31;
             boolean computed = false;
             int mx = 0, my = 0;
@@ -383,6 +408,7 @@ public class ClickGui extends GuiScreen {
 
     @Override
     public void onGuiClosed() {
+        this.opai.close();
         GuiModule.restoreScale();
         this.watermarkAnimation = null;
         this.delayedAnimation = null;
@@ -400,9 +426,7 @@ public class ClickGui extends GuiScreen {
         for (Module m : ModuleManager.modules) {
             m.guiUpdate();
         }
-        if (xyz.daikirai.module.GuiModule.saveCategoryPositions.isToggled()) {
-            xyz.daikirai.client.ClientConfig.save();
-        }
+        xyz.daikirai.client.ClientConfig.save();
     }
 
     @Override

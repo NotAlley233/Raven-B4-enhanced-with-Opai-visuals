@@ -64,7 +64,7 @@ public class TargetHudModule extends Module {
     @Override
     public void guiButtonToggled(ButtonSetting b) {
         if (b == editPosition) {
-            mc.displayGuiScreen(new TargetHudEditor());
+            mc.displayGuiScreen(xyz.daikirai.gui.opai.OpaiRuntime.ready() ? new xyz.daikirai.gui.opai.OpaiHudEditor() : new TargetHudEditor());
         }
     }
 
@@ -104,6 +104,7 @@ public class TargetHudModule extends Module {
     }
 
     public static void render(xyz.daikirai.util.Animation fade, String name, float health, double ratio) {
+        if (xyz.daikirai.gui.opai.OpaiHud.target(fade, name, health, ratio)) return;
         mode.render(fade, text(name, health, ratio), ratio);
     }
 
